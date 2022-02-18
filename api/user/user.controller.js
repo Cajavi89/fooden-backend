@@ -6,8 +6,7 @@ const {
   deleteUserById
 } = require('./user.service');
 const User = require('./user.model')
-const jwt = require('jsonwebtoken')
-
+const { signToken } = require('../../auth/auth.services')
 
 async function getAllUsersHandler(req, res){
   try {
@@ -76,9 +75,8 @@ async function loginUserHandler(req,res){
       });
     };
 
-    const token = jwt.sign(user.profile, 'm1p455w0rd',{
-      expiresIn: '1h'
-    });
+    const token = signToken(user.profile)
+
     res.status(200).json(token)
   } catch (error) {
     res.status(400).json(error)

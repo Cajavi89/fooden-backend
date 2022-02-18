@@ -48,10 +48,20 @@ async function deleteUserById(id){
   }
 };
 
+async function getUserByEmail(email){
+  try {
+    const user = await User.findOne({email})
+    return user;
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   getAllUsers,
   createUser,
   getUserById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  getUserByEmail
 }

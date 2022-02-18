@@ -9,12 +9,14 @@ const {
   loginUserHandler
  } = require('./user.controller')
 
+ const { isAuthenticated } = require('../../auth/auth.services')
+
 const router = Router();
 
 router.get('/', getAllUsersHandler );
 router.post('/', createUserHandler );
 router.get('/:id', getUserByIdHandler );
-router.patch('/:id', updateUserByIdHandler );
+router.patch('/:id', isAuthenticated, updateUserByIdHandler );
 router.delete('/:id', deleteUserByIdHandler );
 router.post('/login', loginUserHandler);
 

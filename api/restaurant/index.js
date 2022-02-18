@@ -9,14 +9,16 @@ const {
   deleteRestaurantHandler
 } = require('./restaurant.controller')
 
+ const { isAuthenticated, hasRole } = require('../../auth/auth.services')
+
 const router = Router();
 
 router.get('/', getAllRestaurantsHandler);
-router.post('/', createRestaurantHandler);
+router.post('/', isAuthenticated,(req,res,next)=> hasRole(req,res,next, 'user'), createRestaurantHandler);
 router.get('/details/:place_id', getAllRestaurantDetails);
 router.get('/photo/:photo_reference', getAllRestaurantPhotos);
 router.get('/:id', getRestaurantByIdHandler);
-router.patch('/:id', updateRestaurantByIdHandler);
+router.patch('/:id', isAuthenticated, updateRestaurantByIdHandler);
 router.delete('/:id', deleteRestaurantHandler);
 
 
