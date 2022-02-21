@@ -3,7 +3,8 @@ const {
   createUser,
   getUserById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  getUserByEmail
 } = require('./user.service');
 const User = require('./user.model')
 const { signToken } = require('../../auth/auth.services')
@@ -49,6 +50,7 @@ async function updateUserByIdHandler(req,res){
   }
 };
 
+
 async function deleteUserByIdHandler(req, res) {
   const { id } = req.params
   try {
@@ -64,14 +66,14 @@ async function loginUserHandler(req,res){
   try {
     const user = await User.findOne({email})
     if(!user){
-      return res.status(400).json({
-        message:'User not found'
+      return res.status(401).json({
+        message:'Email o Contrasena invalida'
       });
     };
     const isMatch = await user.comparePassword(password);
     if(!isMatch){
-      return res.status(400).json({
-        message: 'Invalid password',
+      return res.status(401).json({
+        message: 'Email o Contrasena invalida',
       });
     };
 
@@ -79,7 +81,19 @@ async function loginUserHandler(req,res){
 
     res.status(200).json(token)
   } catch (error) {
-    res.status(400).json(error)
+    return res.status(400).json({Error: error.message})
+  }
+}
+
+async function getUserByEmailHandler(req,res){
+  const { email }= req.body
+  console.log('BBBBB', req.body);
+  try {
+    const user = await getUserByEmail(email)
+    console.log(user);
+    return res.status(200).json(user)
+  } catch (error) {
+    return res.status(400).json({Error: error.message})
   }
 }
 
@@ -89,5 +103,6 @@ module.exports = {
   getUserByIdHandler,
   updateUserByIdHandler,
   deleteUserByIdHandler,
-  loginUserHandler
+  loginUserHandler,
+  getUserByEmailHandler
 }

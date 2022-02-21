@@ -21,16 +21,26 @@ const restaurantSchema= new mongoose.Schema({
   rating: {
     type: Number
   },
-  foodType: {
-    type: Array
-  },
+  foodType: [
+    {
+      foodCategory:{
+        type : String
+      }
+    }
+  ],
   reviews: [
     {
       comment: {
         type: String,
+      },
+      user:{
+        type: String
       }
     }
-  ]
+  ],
+  photo: {
+    type: String,
+  }
 },{
   timestamps:true
 });

@@ -91,6 +91,7 @@ async function updateRestaurantByIdHandler(req, res){
   }
 };
 
+
 async function deleteRestaurantHandler(req,res) {
   const { id } = req.params
   try {

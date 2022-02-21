@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user'
   },
+  profilePhoto:{
+    type: String,
+    default: 'http://res.cloudinary.com/cajavi89/image/upload/v1645398117/nw6cmrdqt7ih7f6j0lyr.png'
+  },
   passwordResetToken: String,
   passwordResetExpires: Date
 },{
@@ -69,8 +73,8 @@ userSchema.methods.comparePassword = async function (candidatePassword){
 
 userSchema.virtual('profile').get(function() {
   const user = this;
-  const {firstName, lastName, email, role} = user
-  return {fullName: `${firstName} ${lastName}`, role, email};
+  const {firstName, lastName, email, role, profilePhoto} = user
+  return {fullName: `${firstName} ${lastName}`, role, email,profilePhoto};
 
 })
 
