@@ -15,19 +15,16 @@ const restaurantSchema= new mongoose.Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
     required: true
   },
   rating: {
     type: Number
   },
-  foodType: [
+  foodType:
     {
-      foodCategory:{
-        type : String
-      }
-    }
-  ],
+      type: String
+    },
   reviews: [
     {
       comment: {

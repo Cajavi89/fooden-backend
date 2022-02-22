@@ -42,9 +42,15 @@ async function getUserByIdHandler(req, res){
 
 async function updateUserByIdHandler(req,res){
   const { id } = req.params
+
   try {
-    const user = await updateUserById(id, req.body);
-    return res.status(200).json(user);
+    const userFromDB = await getUserById(id);
+
+    userFromDB.profilePhoto = req.body.profilePhoto
+
+    const user = await updateUserById(id, userFromDB);
+    const token = signToken(user.profile)
+    return res.status(200).json(token);
   } catch (error) {
     return res.status(404).json({Error: error.message})
   }

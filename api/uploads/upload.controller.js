@@ -22,6 +22,8 @@ async function uploadSingleHandler(req,res){
     res.status(500).json({Error:"No arcivho adjunto"})
   }
 }
+
+// VARIAS IMAGENES
 async function uploadArrayHandler(req,res){
   const { files } = req;
 

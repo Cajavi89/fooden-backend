@@ -17,9 +17,9 @@ const router = Router();
 router.get('/', getAllUsersHandler );
 router.post('/', createUserHandler );
 router.post('/login', loginUserHandler);
-router.get('/userEmail', getUserByEmailHandler);
+router.post('/userEmail', getUserByEmailHandler);
 router.get('/:id', getUserByIdHandler );
-router.patch('/:id', isAuthenticated, updateUserByIdHandler );
+router.patch('/:id', isAuthenticated,updateUserByIdHandler );
 router.delete('/:id', deleteUserByIdHandler );
 
 
