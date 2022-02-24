@@ -21,6 +21,9 @@ const restaurantSchema= new mongoose.Schema({
   rating: {
     type: Number
   },
+  ratingTimes: {
+    type: Number
+  },
   foodType:
     {
       type: String

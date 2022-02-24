@@ -18,7 +18,7 @@ router.post('/', isAuthenticated,(req,res,next)=> hasRole(req,res,next, 'user'),
 router.get('/details/:place_id', getAllRestaurantDetails);
 router.get('/photo/:photo_reference', getAllRestaurantPhotos);
 router.get('/:id', getRestaurantByIdHandler);
-router.patch('/:id', isAuthenticated, updateRestaurantByIdHandler);
+router.patch('/:id', updateRestaurantByIdHandler);
 router.delete('/:id', deleteRestaurantHandler);
 
 

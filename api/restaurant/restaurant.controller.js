@@ -73,19 +73,42 @@ async function getRestaurantByIdHandler(req, res){
 
 async function updateRestaurantByIdHandler(req, res){
   const { id }= req.params
-  const review= req.body
-  console.log(review);
+  const {comment= null, user = null, rating = 0}= req.body
+  console.log("🚀 ~ file: restaurant.controller.js ~ line 77 ~ updateRestaurantByIdHandler ~ req.body", req.body)
+
+
+  const review = {
+    comment,
+    user
+  }
+  // const review= req.body
   try {
     const restaurantToUpdate = await getRestaurantById(id);
-    console.log(restaurantToUpdate.reviews);
-    restaurantToUpdate.reviews.push(review)
+    //UPDATING COMMENTS
+    if(comment){
+      restaurantToUpdate.reviews.push(review)
 
-    const updatedRestaurant = await updateRestaurantById(id, restaurantToUpdate)
-
-    if(!updatedRestaurant){
-      return res.status(404).json({message: `Restaurant not found with id: ${id}`})
+      const updatedRestaurant = await updateRestaurantById(id, restaurantToUpdate)
+      if(!updatedRestaurant){
+        return res.status(404).json({message: `Restaurant not found with id: ${id}`})
+      }
+      return res.status(200).json(updatedRestaurant);
     }
-    return res.status(200).json(updatedRestaurant);
+    // UPDATING RATINGS
+    if(rating){
+      restaurantToUpdate.rating = restaurantToUpdate.rating + rating
+      restaurantToUpdate.ratingTimes = restaurantToUpdate.ratingTimes + 1
+
+      const updatedRestaurant = await updateRestaurantById(id, restaurantToUpdate)
+      if(!updatedRestaurant){
+        return res.status(404).json({message: `Restaurant not found with id: ${id}`})
+      }
+      return res.status(200).json(updatedRestaurant);
+    }
+    //VALIDATING IF SOMETHING COMES NULL
+    if(!rating && !comment){
+      return res.status(400).json({Error: 'not info'});
+    }
   } catch (error) {
     return res.status(400).json({Error: error.message})
   }
