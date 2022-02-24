@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { restart } = require('nodemon');
 const cloudinary = require('cloudinary').v2;
 
 async function uploadSingleHandler(req,res){
